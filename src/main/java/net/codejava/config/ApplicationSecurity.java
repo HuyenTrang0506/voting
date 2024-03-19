@@ -64,7 +64,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors();
         http.authorizeRequests()
-                .antMatchers("/auth/**", "/enroll/**","/users/pro-email").permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
 
         http.exceptionHandling()
@@ -86,3 +86,4 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 }
+//                .antMatchers("/auth/**", "/enroll/**","/users/pro-email").permitAll()

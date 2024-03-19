@@ -14,15 +14,17 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-@Data
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String fullname;
 
@@ -41,15 +43,6 @@ public class User implements UserDetails {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] avatarUrl;
 
-    @Column(nullable = false)
-    private boolean isPro = false;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Vocabulary> vocabularies;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Enrollment> enrollments;
-
     @ManyToMany
     @JoinTable(
             name = "users_roles",
@@ -57,27 +50,11 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-
-
+    @ManyToMany(mappedBy = "users")
+    private Set<Election> elections = new HashSet<>();
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @JsonIgnore
@@ -98,9 +75,6 @@ public class User implements UserDetails {
         return authorities;
     }
 
-    public boolean getPro() {
-        return this.isPro;
-    }
 
     @Override
     public String getUsername() {
@@ -127,6 +101,7 @@ public class User implements UserDetails {
         return true;
     }
 
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -137,10 +112,5 @@ public class User implements UserDetails {
 
     public void addRole(Role role) {
         this.roles.add(role);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(email, password);
     }
 }

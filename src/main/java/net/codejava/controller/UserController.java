@@ -20,10 +20,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RolesAllowed("ADMIN")
+    @GetMapping()
+    public ResponseEntity<Object> getAllUser() {
+        List<User> users = userService.getAllUser();
+        return ResponseEntity.ok(users);
+    }
     @RolesAllowed("USER")
     @PatchMapping("/password")
     public ResponseEntity<User> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO, Principal principal) {
-        User user = userService.changePassword(changePasswordDTO.getOldPassword(), changePasswordDTO.getPassword(), principal);
+        User user = userService.changePassword(changePasswordDTO.getOldPassword(), changePasswordDTO.getNewPassword(), principal);
         return ResponseEntity.ok(user);
     }
 
@@ -31,30 +37,6 @@ public class UserController {
     @PatchMapping("/avatar")
     public ResponseEntity<User> changeAvatar(@RequestBody ChangeAvatarDTO changeAvatarDTO, Principal principal) {
         return ResponseEntity.ok(userService.changeAvatar(changeAvatarDTO.getUrl(), principal));
-    }
-
-    @RolesAllowed("ADMIN")
-    @PatchMapping("/pro")
-    public ResponseEntity<User> changePro(@RequestParam("id") Long userId) {
-        return ResponseEntity.ok(userService.changePro(userId));
-    }
-
-    @PatchMapping("/pro-email")
-    public ResponseEntity<User> changeProByEmail(@RequestParam("email") String email) {
-        return ResponseEntity.ok(userService.changePro(email));
-    }
-
-    @RolesAllowed(("USER"))
-    @GetMapping("/isPro")
-    public ResponseEntity<Boolean> isPro(Principal principal) {
-        return ResponseEntity.ok(userService.checkPro(principal));
-    }
-
-    @RolesAllowed("ADMIN")
-    @GetMapping()
-    public ResponseEntity<Object> getAllUser() {
-        List<User> users = userService.getAllUser();
-        return ResponseEntity.ok(users);
     }
 
 

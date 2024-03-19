@@ -1,4 +1,5 @@
 package net.codejava.dto;
+import java.util.Set;
 
 
 public class UserDto {
@@ -30,4 +31,3 @@ public class UserDto {
     }
 
 }
-

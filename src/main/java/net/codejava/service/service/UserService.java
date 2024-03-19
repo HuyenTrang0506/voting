@@ -14,9 +14,6 @@ public interface UserService {
 
     User changeAvatar(String url, Principal principal);
 
-    User changePro(Long id);
-
-    User changePro(String email);
 
     Boolean delete(User user);
 

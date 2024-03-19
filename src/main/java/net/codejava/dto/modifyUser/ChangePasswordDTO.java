@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChangePasswordDTO {
     private String oldPassword;
-    private String password;
+    private String newPassword;
 
     // Getters and setters
 }

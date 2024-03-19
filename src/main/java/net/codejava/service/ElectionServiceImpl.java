@@ -2,7 +2,12 @@ package net.codejava.service;
 
 import net.codejava.entity.Election;
 import net.codejava.service.service.ElectionService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+@Service
+@Transactional
 public class ElectionServiceImpl implements ElectionService {
     @Override
     public Election save(Election election) {

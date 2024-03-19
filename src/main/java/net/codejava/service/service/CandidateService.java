@@ -8,4 +8,7 @@ public interface CandidateService {
     Candidate update(Candidate candidate);
     Boolean delete(Candidate candidate);
 
+    Boolean delete(Long id);
+
+
 }
